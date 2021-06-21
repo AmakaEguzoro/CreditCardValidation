@@ -42,6 +42,12 @@
     border: 1px solid #304FFE;
     outline-width: 0
 }
+.form-control.ng-touched.ng-invalid{
+    border: 1px solid red;
+}
+.form-control.ng-touched.ng-valid{
+    border: 1px solid green;
+}
 
 .input-group {
     position: relative;

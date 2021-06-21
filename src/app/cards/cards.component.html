@@ -2,7 +2,7 @@
         <div class=" col-lg-6 col-md-8">
             <div class="card p-3">
                
-                <form class="form-card" >
+                <form class="form-card" [formGroup]="myForm" (ngSubmit)="onSubmit()"  >
 
                     <div class="row justify-content-center mb-4 radio-group">
                         
@@ -18,36 +18,57 @@
                         </div>
                          <br>
                     </div>
-                   
+                   <!-- Card Holder -->
                     <div class="row justify-content-center">
                         <div class="col-12">
-                            <div class="input-group"> <input type="text" name="Name"> <label>Enter Card Holder</label> </div>
+                            <div class="input-group">                                 
+                                <input type="text" formControlName="holder" class="form-control"  pattern="^(\w\w+)\s(\w+)$"> 
+                                <label>Enter Card Holder</label>
+                                <small *ngIf="holder.invalid && holder.touched" class="text-danger">Full Name is required</small>
+                            </div>
                         </div>
                     </div>
+                    <!-- Card Number -->
                     <div class="row justify-content-center">
                         <div class="col-12">
-                            <div class="input-group"> <input type="text" id="cr_no" name="card-no" placeholder="0000 0000 0000 0000" minlength="19" maxlength="19"> <label>Enter Card Number</label> </div>
+                            <div class="input-group"> <input type="text" id="cr_no" formControlName="cardNumber" class="form-control" placeholder="0000 0000 0000 0000" minlength="13" maxlength="16" pattern="^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})$">
+                                 <label>Enter Card Number</label>
+                                 <small *ngIf="cardNumber.invalid && cardNumber.touched" class="text-danger">Enter a valid Card Number</small>
+                            </div>
                         </div>
                     </div>
+                    <!-- Expiry and CVV -->
                     <div class="row justify-content-center">
                         <div class="col-12">
                             <div class="row">
+                                <!--Expiry-->
                                 <div class="col-6">
-                                    <div class="input-group"> <input type="text" id="exp" name="expdate" placeholder="MM/YY" minlength="5" maxlength="5"> <label>Expiry Date</label> </div>
+                                    <div class="input-group"> <input type="text" id="exp" formControlName="expdate" class="form-control" placeholder="MM/YY" minlength="5" maxlength="5" pattern="(?:0[1-9]|1[0-2])/[0-9]{2}">
+                                         <label>Expiry Date</label> 
+                                         <small *ngIf="expdate.invalid && expdate.touched" class="text-danger">Enter a valid expiry date</small>
+                                    </div>
                                 </div>
+                                <!-- cvv -->
                                 <div class="col-6">
-                                    <div class="input-group"> <input type="password" name="cvv" placeholder="&#9679;&#9679;&#9679;" minlength="3" maxlength="3"> <label>Enter CVV</label> </div>
+                                    <div class="input-group"> <input type="password" formControlName="cvv" class="form-control" placeholder="&#9679;&#9679;&#9679;" minlength="3" maxlength="3" pattern="[0-9]+">
+                                         <label>Enter CVV</label>
+                                         <small *ngIf="cvv.invalid && cvv.touched" class="text-danger">CVV is required</small>
+                                    </div>
                                 </div>
                             </div>
+                    <!-- amount -->
                     <div class="row justify-content-center">
                             <div class="col-12">
-                               <div class="input-group"> <input type="text" id="amount" name="amount" > <label>Amount</label> </div>
+                               <div class="input-group"> <input type="text" id="amount" formControlName="amount" class="form-control" pattern="[0-9]+" >
+                               <label>Amount</label>
+                               <small *ngIf="amount.invalid && amount.touched" class="text-danger">Enter a valid amount</small>
+                             </div>
                             </div>
                     </div>
                         </div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-12"> <input type="submit" value="PAY" class="btn btn-pay placeicon"> </div>
+                        <div class="col-md-12"> <input type="submit" [disabled]="!myForm.valid" value="PAY" class="btn btn-pay placeicon"> </div>
                     </div>
                 </form>
             </div>
